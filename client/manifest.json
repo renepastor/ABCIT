@@ -1,0 +1,30 @@
+{
+	"name": "VENTAS ABCIT",
+	"short_name": "VENTAS-ABCIT",
+	"description": "Aplicacion VENTAS-ABCIT",
+	"start_url": "./#home",
+	"display": "standalone",
+	"orientation": "portrait",
+	"background_color": "#001a4b",
+	"theme_color": "#001a4b",
+	"scope" : "./",
+	"lang" : "es-BO",
+	"icons": [
+		{
+			"src": "./img/img192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "./img/img512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"author": {
+		"name": "Rene Pastor Mamani Flores",
+		"website": "https://abcit.parce.vip"
+	},
+	"gcm_sender_id": "232856817910000",
+	"gcm_user_visible_only": true
+}

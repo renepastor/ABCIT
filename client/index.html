@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title> <%= htmlWebpackPlugin.options.title %> </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
+  <meta name="author" content="<%= htmlWebpackPlugin.options.author %>">
+  <meta name="keyword" content="<%= htmlWebpackPlugin.options.key %>">
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  
+  <!--Android -->
+  <meta name="theme-color" content="#001a4b" />
+  <meta name="msapplication-TileColor" content="#001a4b" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-TileImage" content="./img/logo.png" />
+  <meta name="mobile-web-app-capable" content="yes"  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="<%= htmlWebpackPlugin.options.title %>" />
+  <meta name="application-name" content="<%= htmlWebpackPlugin.options.name %>" />
+  
+  <!--IOs -->
+  <link rel="apple-touch-icon" href="./img/ypfb.jpg">
+  <link rel="icon" type="image/png" href="./img/img32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="./img/img16.png" sizes="16x16">
+  <link rel="icon" href="./img/img150.png" alter"prinsipal IO">
+
+  <!-- Main styles for this application -->
+  <link href="main.css" rel="stylesheet">
+  <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css" />
+        <style type="text/css">
+            #nprogress .bar {
+                background: red !important;
+            }
+ 
+            #nprogress .peg {
+                box-shadow: 0 0 10px red, 0 0 5px red !important;
+            }
+ 
+            #nprogress .spinner-icon {
+                border-top-color: red !important;
+                border-left-color: red !important;
+            }
+        </style> 
+  <link rel="manifest" href="./manifest.json">
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show sidebar-minimized brand-minimized">
+    <div id="login_container"></div>
+    <header class="app-header navbar sombra" id='header_container'>
+    </header>
+  
+    <div class="app-body">
+      <div class="sidebar">
+        <nav class="sidebar-nav">
+          <ul class="nav" id="listMenu">
+          </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+      </div>
+
+      <!-- Main content -->
+      <main class="container p-1" onClick="document.body.className = document.body.className.replace('sidebar-show','')">
+        <h5 class="p-0 m-0 w-100 nav position-relative"><b id="modTitle" class=""></b></h5>
+        <div class="" id="pnlBody"></div>
+        <!-- /.conainer-fluid -->
+      </main>
+      <div aria-live="polite" aria-atomic="true" style="position: fixed; right: 250px;">
+        <div style="position: absolute; top: 0;" id="msjLoad"></div>
+      </div>
+      <!-- Main Modal -->
+      <div id="pnlModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="pnlModalTitle" aria-hidden="true">
+      </div>
+      <div id="pnlFijo" class="modal" tabindex="-1" role="dialog" aria-labelledby="pnlFijoTitle" aria-hidden="true">
+      </div>
+      <!-- Menu Lateral -->
+      <div id="pnlMenulRight" class="menul-right">
+        <div></div>
+      </div>
+    </div>
+  
+    <footer class="app-footer d-flex justify-content-end" id="footer_container">
+    </footer>
+  
+</body>
+</html>
