@@ -408,8 +408,9 @@ const UtilsServ = {
 
     ,miPunto:(pnl)=>{
         navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
+            var lat = position.coords.latitude?position.coords.latitude:0;
+            var lng = position.coords.longitude?position.coords.longitude:0;
+            console.log(lat,lng, document.getElementById(pnl))
             document.getElementById(pnl).value = JSON.stringify([lat,lng]);
             document.getElementById("ver_"+pnl).href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=19/${lat}/${lng}`;
         });
@@ -626,6 +627,29 @@ const UtilsServ = {
             img.src = reg.url;
             document.getElementById(param.pnl).appendChild(div);
         })
+    }
+
+    ,btnFacebook:()=>{
+        var d=document, s='script', id='facebook-jssdk';
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)){location.reload(); return;}
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=232856817910000';
+        fjs.parentNode.insertBefore(js, fjs);
+        function statusChangeCallback(response) {
+            if (response.status === 'connected') {
+                testAPI();
+            } else {
+                console.log("Boton iniciar");
+            }
+            }
+
+            function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+            }
+        console.log("##;;::,,...", this)
     }
 
 }

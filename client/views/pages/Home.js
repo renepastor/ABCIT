@@ -3,7 +3,7 @@
 // --------------------------------
 import config from '../../config'
 import utilsServ from '../../services/UtilsServ'
-import ingresoComp from '../components/IngresosComp'
+import anuncioComp from '../components/AnunciosComp'
 
 var nPg = 0;
 var pg = 0;
@@ -24,19 +24,11 @@ let Home = {
                         <button class="btn btn-outline-primary" type="button" id="btnSearch"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
-                <ul class="row m-0 p-0 csForm overflow-auto" id="pnlIngreso">
+                <ul class="list-unstyled csForm overflow-auto" id="pnlAnuncio">
                 </ul>
-                <div class="row bg-primary text-white m-0 p-1" id="pnlIngresosFoot">
+                <div class="row bg-primary text-white m-0 p-1" id="pnlAnunciosFoot">
                 </div>
             </div>
-        </div>
-        <div class="fixed-bottom text-right m-3 ">
-            <div id="misBandeja" class="hidden bg-white ">
-                
-            </div>
-            <a href="javascript:void(0)" id="totalProducto" class="btn red btn-danger" data-container="body" data-toggle="popover" data-placement="top">
-                <i class="fa fa-2x fa-cart-plus"></i>
-            </a>
         </div>
         `
         return view
@@ -54,7 +46,34 @@ let Home = {
                     utilsServ.selectOp({"pnl":"grupo", "valor":"id","texto":["descripcion"], "data":d})
                 }
             })
-
+            $("#pnlAnuncio").height((document.getElementsByTagName("body")[0].offsetHeight - 160));
+            $("#pnlAnuncio").on("mouseenter", ".row",function(){
+                if($(this).find(".act").hasClass("csHidden"))
+                $(this).find(".act").removeClass("csHidden");
+            });
+            $("#pnlAnuncio").on("mouseleave", ".row",function(){
+                if(!$(this).find(".act").hasClass("csHidden"))
+                $(this).find(".act").addClass("csHidden");
+            });
+            var param = {obj:{scrollHeight:0, clientHeight:0, scrollTop:0}};
+            $(".overflow-auto").scroll(function(){
+                param.obj = this;
+                fnPgScroll(param);
+            });
+            //fnPgScroll(param);
+            $("#btnSearch").on("click", function(){
+                nPg = 0, pg = 0;
+                var param = {obj:{scrollHeight:0, clientHeight:0, scrollTop:0}};
+                $("#pnlAnuncio").html("")
+                $("#pnlAnuncioFoot").html(`Cargando....`)
+                fnPgScroll(param);
+            });
+            $('#valSearch').keyup(function(e){
+                if(e.keyCode == 13){
+                    $("#btnSearch").click();
+                }
+            });
+            $("#btnSearch").click();
         });
         $("#btnSearch").click();
     }
@@ -67,15 +86,23 @@ export default Home;
 var fnPgScroll = function(param){
     var scrollTopMax = window.scrollMaxY || (param.obj.scrollHeight - param.obj.clientHeight);
     if(param.obj.scrollTop*1+1 >= scrollTopMax){
-        q = `query{fnBAnuncios(pDato:"${$('#valSearch').val()}" offset:${nPg}, first:${config.LIMIT_PG}){
-            totalCount nodes{tipoEmpleo:tblTipoByIdTipoEmpleo{valor} persId anuncio estado}}}`;
+        q = `query{
+            fnBAnuncios(pDato:""){
+              nodes{
+                tpEmpleo:tblTipoByIdTipoEmpleo{descripcion}
+                tpAnuncio:tblTipoByIdTipoAnuncio{descripcion}
+                persona:usuarioByPersId{alias avatar}
+                      id anuncio celular coordenadas calificacion direccion
+              }
+            }
+          }`;
         utilsServ.fnFetch({url: config.HOST_GRAPH, data: q})
         .then(res => {
-            var d = res.data.fnBIngresos;
+            var d = res.data.fnBAnuncios;
             if(d.nodes.length > 0){
-                $("#pnlIngresosFoot").html(`Cargando....`)
-                d.nodes.map((row, r) => ingresoComp.listPrecentacion(row, r))
-                $("#pnlIngresosFoot").html(`Reg.: ${nPg + d.nodes.length} de ${d.totalCount}`)
+                $("#pnlAnunciosFoot").html(`Cargando....`)
+                d.nodes.map((row, r) => anuncioComp.listPrecentacion(row, r))
+                $("#pnlAnunciosFoot").html(`Reg.: ${nPg + d.nodes.length} de ${d.totalCount}`)
                 pg++;
                 nPg = pg * config.LIMIT_PG;
             }

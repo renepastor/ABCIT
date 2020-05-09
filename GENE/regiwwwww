@@ -1,72 +1,62 @@
                 <h4 class="col-12 bg-1">ANTECEDENTE PERSONAL</h4>
-                <input name="id" id="id" value="" type="hidden" required='required' >
-                <div class="col form-group">
-                    <label class="form-check-label" for="idUnidadMedida">Unidad Medida:</label>
-                    <select name="idUnidadMedida" id="idUnidadMedida" class="select form-control" required='required' ><option>--Seleccionar--</option></select>
+                <input name="id" id="id" value="${reg.id?reg.id:''}" type="hidden" class="numero" required='required' >
+                <input name="persId" id="persId" value="${reg.persId?reg.persId:''}" type="hidden" class="numero" required='required' >
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-check-label" for="idTipoEmpleo">Rubro o Actividad:</label>
+                    <select name="idTipoEmpleo" id="idTipoEmpleo" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
                 </div>
-                <div class="col form-group">
-                    <label class="form-check-label" for="idMoneda">Moneda:</label>
-                    <select name="idMoneda" id="idMoneda" class="select form-control" required='required' ><option>--Seleccionar--</option></select>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-check-label" for="idTipoAnuncio">Tipo Anuncio:</label>
+                    <select name="idTipoAnuncio" id="idTipoAnuncio" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
                 </div>
-                <div class="col form-group">
-                    <label class="form-check-label" for="idProducto">Producto:</label>
-                    <input name="idProducto" id="idProducto" value="" class="texto form-control" type="serarch" required='required' >
-                    <div id="listidProducto"></div>
-                </div>
-                <div class="col form-group">
-                    <label class="form-label" for="descripcion">Descripcion:</label>
-                    <input name="descripcion" id="descripcion" value="" class="text form-control" type="text" required='required' >
-                </div>
-                <div class="col form-group">
-                    <label class="form-label" for="nombres">Nombre:</label>
-                    <input name="nombres" id="nombres" value="" class="text form-control" type="text" required='required' >
-                </div>
-                <div class="col form-group">
-                    <label for="imagenes" class="img-thumbnail">
-                        <img src="" id="imagenes_ax" width="50" height="50" alt="" class="foto"/>
-                        <input type="hidden" name="imagenes" id="imagenes" class="text">
-                        <i>Fotos</i>
-                        <input type="file" name="imagenesFile" id="imagenesFile" placeholder="Imagen" undefined 
-                        class="form-control file-img" onchange="minimizarImg({'imge':'undefined_ax','input':'undefined'});"/>
-                    </label>
-                </div>
-                <div class="col form-group">
-                    <label for="cantidad">Cantidad : </label>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidad">-</button>
-                        <input type="text" name="cantidad" id="cantidad" required='required'  placeholder="Cantidad" max="9999" min="0" step="1" size="5" class="form-control undefined"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidad">+</button>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="ci">Documento de Identificacion:</label>
+                    <div class="input-group">
+                        <input name="ci" id="ci" type="number" min="10" value="${reg.ci?reg.ci:''}" max="99999999" class="ci form-control" aria-label="Text input with dropdown button" required='required' >
+                        <div class="input-group-prepend">
+                            <select id="sel_ci" class="form-control">
+                                <option value="BE">Beni</option>
+                                <option value="CB">Cochabamba</option>
+                                <option value="CH">Chuquisaca</option>
+                                <option value="LP">La Paz</option>
+                                <option value="OR">Oruro</option>
+                                <option value="PD">Pando</option>
+                                <option value="PT">Potosí</option>
+                                <option value="SC">Santa Cruz</option>
+                                <option value="TJ">Tarija</option>
+                                <option value="EX">Extranjero</option>
+                            </select >
+                        </div>
                     </div>
                 </div>
-                <div class="col form-group">
-                    <label for="cantidadExistente">Cantidad Existente : </label>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidadExistente">-</button>
-                        <input type="text" name="cantidadExistente" id="cantidadExistente" required='required'  placeholder="Cantidad Existente" max="9999" min="0" step="1" size="5" class="form-control undefined"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidadExistente">+</button>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="facebook">Facebook:</label>
+                    <div id="status"></div>
+                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="celulares">Numero de Celular:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <select id="sel_celulares" class="form-control">
+                                <option value="591">Bol</option>
+                                <option value="55">Brasil</option>
+                                <option value="51">Peru</option>
+                            </select >
+                        </div>
+                        <input name="celulares" id="celulares" type="number" value="${reg.celulares?reg.celulares:''}" min="60000000" max="79999999" class="cel form-control" aria-label="Text input with dropdown button" required='required' >
                     </div>
                 </div>
-                <div class="col form-group">
-                    <label for="cantidadMin">Cant. Minima : </label>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidadMin">-</button>
-                        <input type="text" name="cantidadMin" id="cantidadMin" required='required'  placeholder="Cant. Minima" max="9999" min="0" step="1" size="5" class="form-control undefined"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidadMin">+</button>
-                    </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="direccion">Direccion:</label>
+                    <input name="direccion" id="direccion" value="${reg.direccion?reg.direccion:''}" class="text form-control" type="text" required='required' >
                 </div>
-                <div class="col form-group">
-                    <label for="pUnitario">P Unitario : </label>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="pUnitario">-</button>
-                        <input type="text" name="pUnitario" id="pUnitario" required='required'  placeholder="P Unitario" max="9999" min="0" step="1" size="5" class="form-control undefined"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="pUnitario">+</button>
-                    </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="coordenadas">Cordenadas:</label>
+                    <a href="javascript:void(0)" id="ver_coordenadas" target="_blank" class="fa fa-map-marker">
+                    <input name="coordenadas" id="coordenadas" value="${reg.coordenadas?reg.coordenadas:''}" class="json form-hidden" type="text" required='required'  oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
                 </div>
-                <div class="col form-group">
-                    <label for="pVenta">P Venta : </label>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="pVenta">-</button>
-                        <input type="text" name="pVenta" id="pVenta" required='required'  placeholder="P Venta" max="9999" min="0" step="1" size="5" class="form-control undefined"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="pVenta">+</button>
-                    </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="anuncio">Anuncio:</label>
+                    <textarea name="anuncio" id="anuncio" class="textarea form-control" required='required' >${reg.anuncio?reg.anuncio:''}</textarea>
                 </div>

@@ -17,7 +17,7 @@ INSERT INTO store.tbl_tipos(padre_id,nombre,valor, descripcion,ayuda,validador,u
 (1,'TP-ANUNCIO','TIPO ANUNCIO','TIPO ANUNCIO','','',1);
 INSERT INTO store.tbl_tipos(padre_id,nombre,valor,descripcion,ayuda,validador,usuario) VALUES
 (store.fn_tipo_nombre_id('TP-ANUNCIO'),'OFERTA','OFERTA','BRINDAR SERVICIO','','',1),
-(store.fn_tipo_nombre_id('TP-ANUNCIO'),'DEMANDA','REQUIERE SERVICIO','','','',1);
+(store.fn_tipo_nombre_id('TP-ANUNCIO'),'DEMANDA','DEMANDA','REQUIERE SERVICIO','','',1);
 
 
 --ALTER TABLE store.tbl_tipos ADD COLUMN avatar dtexto2;

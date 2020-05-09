@@ -3,6 +3,7 @@ import alertas from './AlertasComp'
 import utilsServ from '../../services/UtilsServ'
 import config from '../../config'
 import consultasServ from '../../services/ConsultaServ'
+import anuncioServ from '../../services/AnunciosServ'
 let moment = require("moment")
 
 let OfertaEmpleosComp = {
@@ -10,7 +11,7 @@ let OfertaEmpleosComp = {
       return `
       <div class="row">
         <div class="col">
-            <h5><i class="fa fa-users"></i> Ingreso de Materiales</h5>
+            <h5><i class="fa fa-id-card"></i> Mis Anuncios</h5>
             <div class="input-group mb-0 border border-primary">
                 <button class="btn btn-sm btn-new fa fa-plus-square" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" id="new">Nuevo</button>
                 <input type="search" id="valSearch" class="form-control" placeholder="Buscar.." aria-label="Buscar.." aria-describedby="basic-addon2">
@@ -19,14 +20,14 @@ let OfertaEmpleosComp = {
                 </div>
             </div>
                 <div class="row bg-primary text-white m-0">
-                  <div class="col">Descripcion</div>
-                  <div class="col">Producto</div>
-                  <div class="col">Cantidad</div>
-                  <div class="col">P.Unitario</div>
+                  <div class="col">Anuncio</div>
+                  <div class="col">Celular</div>
+                  <div class="col">Grupo o Actividad</div>
+                  <div class="col">Tipo Anuncio</div>
                 </div>
-                <ul class="table-responsive" id="pnlIngreso">
+                <ul class="table-responsive" id="pnlAnuncio">
                 </ul>
-                <div class="row bg-primary text-white m-0" id="pnlIngresosFoot">
+                <div class="row bg-primary text-white m-0" id="pnlAnunciosFoot">
                 </div>
         </div>
       </div>
@@ -36,14 +37,14 @@ let OfertaEmpleosComp = {
     
     
     list: async (row, r) => {
-      $("#pnlIngreso").append(`
+      $("#pnlAnuncio").append(`
          <div class="row ${row.estado} border list-group-item-action m-0 ${(r%2!=0)?'bg-light':''}">
-           <div class="col">${row.descripcion}</div>
+           <div class="col">${row.anuncio}</div>
            <div class="col">
-              ${row.nombre}
+              ${row.celular}
            </div>
-           <div class="col">${row.cantidad}</div>
-           <div class="col">${row.pVenta}</div>
+           <div class="col">${row.tpEmpleo.descripcion}</div>
+           <div class="col">${row.tpAnuncio.descripcion}</div>
            <div class="col csHidden position-absolute act text-right" style="z-index:2;">
              <button class="btn btn-outline-primary fa fa-edit" title="Modificar equipos" data-url="/equipos/edit.html" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="equipos" id="${row.id}"></button>
              <button class="btn btn-outline-primary fa fa-eye" title="Ver" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="cuentas" id="${row.id}"></button>
@@ -54,298 +55,131 @@ let OfertaEmpleosComp = {
        );
    }
    
-   ,camara: async (row, r) => {
-      $("#pnlFijo").html("");
-      
-      $("#pnlFijo").append(`
-      <div class="modal-dialog modal-sm opaco" role="document">
-      <form class="csForm modal-content" id="formCrearEquipos">
-        <fieldset>
-          <div class="modal-header p-0">
-            <legend class="modal-title" id="exampleModalLongTitle">  &nbsp; Crear Equipos</legend>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body py-0">
-            <div class="row">
-              <div class="">
-                <canvas id="canvas" class="w-100 h-100 position-absolute"></canvas>
-                <video id="video" autoplay playsinline class="w-100 h-100"></video>
+   ,add: async (reg={}) => {
+        $("#pnlModal").html(`
+        <div class="modal-dialog modal-lg" role="document">
+          <form class="csForm modal-content" id="formCrear">
+            <fieldset>
+              <div class="modal-header">
+                <legend class="modal-title" id="exampleModalLongTitle">  &nbsp; Anuncio</legend>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              <div class="form-group col-12 position-absolute">
-                <select id="misCamaras" name="misCamaras" required="required" class="form-control text" style="opacity: 1;">
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer justify-content-center p-2">
-            <input type="button" id="play" value="play" class="btn btn-outline-primary fa fa-play-circle" title="Iniciar Camara">
-            <input type="button" id="capturar" value="Capturar" class="btn btn-outline-primary fa fa-camera" title="Capturar Imagen">
-            <button type="button" class="btn btn-outline-primary fa fa-close" data-dismiss="modal" title="Cancelar"></button>
-          </div>
-        </fieldset>
-      </form>
-    </div>`);
-    const video = document.getElementById('video');
-    const play = document.getElementById('play');
-    const misCamaras = document.getElementById('misCamaras');
-    const btnCapturar = document.getElementById('capturar');
-    const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
-    let currentStream;
+              <div class="modal-body">
+                <div class="row align-items-start">
+                
+                    <!-- input name="id" id="id" value="${reg.id?reg.id:''}" type="hidden" class="numero"-->
+                    <input name="persId" id="persId" value="${reg.persId?reg.persId:''}" type="hidden" class="numero" required='required' >
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-check-label" for="idTipoEmpleo">Rubro o Actividad:</label>
+                        <select name="idTipoEmpleo" id="idTipoEmpleo" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-check-label" for="idTipoAnuncio">Tipo Anuncio:</label>
+                        <select name="idTipoAnuncio" id="idTipoAnuncio" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="ci">Documento de Identificacion:</label>
+                        <div class="input-group">
+                            <input name="ci" id="ci" type="number" min="10" value="${reg.ci?reg.ci:''}" max="99999999" class="ci form-control" aria-label="Text input with dropdown button" required='required' >
+                            <div class="input-group-prepend">
+                                <select id="sel_ci" class="form-control">
+                                    <option value="BE">Beni</option>
+                                    <option value="CB">Cochabamba</option>
+                                    <option value="CH">Chuquisaca</option>
+                                    <option value="LP">La Paz</option>
+                                    <option value="OR">Oruro</option>
+                                    <option value="PD">Pando</option>
+                                    <option value="PT">Potosí</option>
+                                    <option value="SC">Santa Cruz</option>
+                                    <option value="TJ">Tarija</option>
+                                    <option value="EX">Extranjero</option>
+                                </select >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="facebook">Facebook:</label>
+                        <div id="status"></div>
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="celular">Numero de Celular:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select id="sel_celular" class="form-control">
+                                    <option value="591">Bol</option>
+                                    <option value="55">Brasil</option>
+                                    <option value="51">Peru</option>
+                                </select >
+                            </div>
+                            <input name="celular" id="celular" type="number" value="${reg.celulares?reg.celulares:''}" min="60000000" max="79999999" class="cel form-control" aria-label="Text input with dropdown button" required='required' >
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="direccion">Direccion:</label>
+                        <input name="direccion" id="direccion" value="${reg.direccion?reg.direccion:''}" class="text form-control" type="text" required='required' >
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="coordenadas">Cordenadas:</label>
+                        <a href="javascript:void(0)" id="ver_coordenadas" target="_blank" class="fa fa-map-marker">
+                        <input name="coordenadas" id="coordenadas" value="${reg.coordenadas?reg.coordenadas:''}" class="json form-hidden" type="text" required='required'  oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-8">
+                        <label class="form-label" for="anuncio">Anuncio:</label>
+                        <textarea name="anuncio" id="anuncio" class="textarea form-control" required='required' >${reg.anuncio?reg.anuncio:''}</textarea>
+                    </div>
 
-    function stopMediaTracks(stream) {
-      stream.getTracks().forEach(track => {
-        track.stop();
-      });
-    }
 
-    function gotDevices(mediaDevices) {
-      misCamaras.innerHTML = '';
-      let selectOp = document.createElement('option');
-      selectOp.innerHTML = '--Sel. Camara--';
-      selectOp.value = '';
-      misCamaras.appendChild(selectOp);
-      let count = 1;
-      mediaDevices.forEach(mediaDevice => {
-        if (mediaDevice.kind === 'videoinput') {
-          const option = document.createElement('option');
-          option.value = mediaDevice.deviceId;
-          const label = mediaDevice.label || `Camera ${count++}`;
-          const textNode = document.createTextNode(label);
-          option.appendChild(textNode);
-          misCamaras.appendChild(option);
-        }
-      });
-      misCamaras.addEventListener('change', () => {
-        play.click();
-      });
-    }
-    btnCapturar.addEventListener('click', () => {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      // Stop all video streams.
-      video.srcObject.getVideoTracks().forEach(track => track.stop());
-      utilsServ.imagenUpload({"idCanvas":"canvas", "idValor":"imagenes"});
-      btnCapturar.disabled = true;
-    });
-  
-    play.addEventListener('click', event => {
-      if (typeof currentStream !== 'undefined') {
-        stopMediaTracks(currentStream);
-      }
-      const videoConstraints = {};
-      if (misCamaras.value === '') {
-        videoConstraints.facingMode = 'environment';
-      } else {
-        videoConstraints.deviceId = { exact: misCamaras.value };
-      }
-      const constraints = {
-        video: videoConstraints,
-        audio: false
-      };
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(stream => {
-          currentStream = stream;
-          video.srcObject = stream;
-          btnCapturar.disabled = false;
-          const context = canvas.getContext('2d');
-          context.clearRect(0, 0, canvas.width, canvas.height);
-          return navigator.mediaDevices.enumerateDevices();
-        })
-        .then(gotDevices)
-        .catch(error => {
-          console.error(error);
-        });
-    });
-
-    navigator.mediaDevices.enumerateDevices().then(gotDevices);
-   },
-    add: async () => {
-      $("#pnlModal").html(`
-      <div class="modal-dialog modal-lg" role="document">
-        <form class="csForm modal-content" id="formCrearEquipos">
-          <fieldset>
-            <div class="modal-header p-0">
-              <legend class="modal-title" id="exampleModalLongTitle">  &nbsp; Ingreso Productos</legend>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row align-items-start">
-                <input name="id" id="id" value="" type="hidden" required='required' >
-                <input type="hidden" name="cantidadExistente" id="cantidadExistente" required='required'  placeholder="Cantidad Existente" max="9999" min="0" step="1" size="5" class="form-control numero"/>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-check-label" for="idRubro">Grupo:</label>
-                    <select name="idRubro" id="idRubro" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="nombre">Nombre:</label>
-                    <input name="nombre" id="nombre" value="" class="text form-control" type="text" required='required' >
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="descripcion">Descripcion:</label>
-                    <input name="descripcion" id="descripcion" value="" class="text form-control" type="text" required='required' >
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="cantidad">Cantidad a Ingresar: </label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidad">-</button>
-                        <input type="text" name="cantidad" id="cantidad" required='required'  placeholder="Cantidad" max="9999" min="0" step="1" size="5" class="form-control numero"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidad">+</button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="idUnidadMedida">Unidad Medida:</label>
-                    <select name="idUnidadMedida" id="idUnidadMedida" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
-                </div>
-                <!--div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="cantidadExistente">Cantidad Existente : </label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidadExistente">-</button>
-                        
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidadExistente">+</button>
-                    </div>
-                </div-->
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="cantidadMin">Cant. Minima : </label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="cantidadMin">-</button>
-                        <input type="text" name="cantidadMin" id="cantidadMin" required='required'  placeholder="Cant. Minima" max="9999" min="0" step="1" size="5" class="form-control numero"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="cantidadMin">+</button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label for="pUnitario" class="form-label">Precio Compra : </label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="pUnitario">-</button>
-                        <input type="text" name="pUnitario" id="pUnitario" required='required'  placeholder="P Unitario" max="9999" min="0" step="1" size="5" class="form-control numero"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="pUnitario">+</button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="idMoneda">Moneda:</label>
-                    <select name="idMoneda" id="idMoneda" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label for="pVenta" class="form-label">Precio para la Venta : </label>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-outline-primary menos" data-in="pVenta">-</button>
-                        <input type="text" name="pVenta" id="pVenta" required='required'  placeholder="P Venta" max="9999" min="0" step="1" size="5" class="form-control numero"/>
-                        <button type="button" class="btn btn-outline-primary mas" data-in="pVenta">+</button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label for="file" class="form-label">Archivo : </label>
-                    <div for="imagenes" class="form-control btn btn-outline-primary">
-                        <i class="fa fa-picture-o position-absolute"> Examinar Archivo...</i>
-                        <input type="file" name="imagenesFile" id="imagenesFile" placeholder="Imagen" class="file-img position-relative"/>
-                        <canvas id="canvasFile" width="300" height="300" class="foto" hidden></canvas>
-                        <input type="hidden" name="imagenes" id="imagenes" value='[]' class="json">
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label for="camara" class="form-label">Imagen de camara : </label>
-                    <div class="btn-group">
-                      <button id="camara" type="button" class="btn btn-outline-primary fa fa-camera" data-backdrop="static" data-toggle="modal" data-target="#pnlFijo">
-                        Abrir Camara
-                      </button>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                  <div class="form-group list-group list-group-horizontal" id="listImages">
-                  </div>  
                 </div>
               </div>
-            </div>
-            <div class="modal-footer justify-content-center p-2">
-              <button type="submit" class="btn btn-primary">
-                <i class="fa fa-save"></i> Guardar
-              </button>
-              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">
-                Cancelar <i class="fa fa-close"></i> 
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-      `);
-      (function(){
-        $("#cantidad").on("change", function(){
-          $("#cantidadExistente").val(this.value);
-        })
-        let q = `{
-          allTblTipos(condition: {nombre: "TP-MONEDA"}) {
-            nodes {
-              tblTiposByPadreId(condition:{estado:"C"}) {
-                nodes {id valor descripcion}
-              }
+              <div class="modal-footer justify-content-center p-2">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-save"></i> Guardar
+                </button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">
+                  Cancelar <i class="fa fa-close"></i> 
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        `);
+        (function(){
+            let resSearch = anuncioServ.idSearch();
+            resSearch.then(res=>{
+                console.log(res)
+                let listTpProfecion = res.data.tpProfeciones.nodes[0].tblTiposByPadreId.nodes;
+                let listTpAnuncio = res.data.tpAnuncios.nodes[0].tblTiposByPadreId.nodes;
+                let anuncio = res.data.anuncio;
+                utilsServ.selectOp({"pnl":"idTipoEmpleo","valor":"id","texto":["descripcion"], "data":listTpProfecion})
+                utilsServ.selectOp({"pnl":"idTipoAnuncio","valor":"id","texto":["descripcion"], "data":listTpAnuncio})
+
+                utilsServ.miPunto("coordenadas");
+                utilsServ.btnFacebook();
+                $("#persId").val(utilsServ.getSession("ssPersId"));
+            });
+        })();
+        $("#formCrear").submit(function(e) {
+          e.preventDefault();
+          var dt = utilsServ.formInput(this);
+          var p =`mutation{createAnuncio(input:{anuncio:{${dt}}}){
+              anuncio{id anuncio coordenadas celular estado editado usuario}
+             }
+           }`;
+           utilsServ.fnFetch({url: config.HOST_GRAPH, data: p})
+          .then(res => {
+            var d = res.data.createIngreso.ingreso;
+            if(d.id>0){
+              IngresosComp.list(d);
+              $("#pnlModal").modal("toggle");
+              alertas.ok("Se registro Correctamente");
+            }else{
+              alertas.error(`No se registro <span hidden>${res.toString()}</span>`);
             }
-          }
-          allUnidadesMedidas(condition:{estado:"C"}){
-            nodes{id abreviatura unidad}
-          }
-          rubroById(id:"1"){
-            rubrosByIdPadre(condition:{estado:"C"}){
-              nodes{id rubro}
-            }
-          }
-        }`;
-        utilsServ.fnFetch({url: config.HOST_GRAPH, data: q})
-        .then(res => {
-          let listMoneda = res.data.allTblTipos.nodes[0].tblTiposByPadreId.nodes;
-          let listUnidadMedida = res.data.allUnidadesMedidas.nodes;
-          let listRubros = res.data.rubroById.rubrosByIdPadre.nodes;
-          utilsServ.selectOp({"pnl":"idUnidadMedida","valor":"id","texto":["[","abreviatura","] ","unidad"], "data":listUnidadMedida})
-          utilsServ.selectOp({"pnl":"idMoneda","valor":"id","texto":["[","valor","] ","descripcion"], "data":listMoneda})
-          utilsServ.selectOp({"pnl":"idRubro","valor":"id","texto":["rubro"], "data":listRubros})
-        });    
-      })();
-      $("#imagenesFile").on("change", function(){
-        utilsServ.minimizarImg({'imge':'imagenes_ax','input':'imagenes','canvas':'canvasFile', 'obj':this});
-        setTimeout(()=>{
-          utilsServ.imagenUpload({"idCanvas":"canvasFile", "idValor":"imagenes"});
-        }, 500)
-      })
-
-      $("#camara").on("click", function(){
-        IngresosComp.camara()
-        Modal;
-      });
-      $("button.menos").on("click", function(){
-        const inp = this;
-        utilsServ.menos(inp.dataset.in)
-      })
-      $("button.mas").on("click", function(){
-        const inp = this;
-        utilsServ.mas(inp.dataset.in)
-      })
-      $("#formCrearEquipos").submit(function(e) {
-        e.preventDefault();
-        var data = $(this);
-        var est = "C";
-        if(!$("#formCrearEquipos #estado").prop("checked")){
-          est ="X";
-        }
-        var dt = utilsServ.formInput(this);
-        var p =`mutation{createIngreso(input:{ingreso:{${dt}}}){
-            ingreso{id descripcion nombre cantidad pVenta estado editado usuario}
-           }
-         }`;
-         utilsServ.fnFetch({url: config.HOST_GRAPH, data: p})
-        .then(res => {
-          var d = res.data.createIngreso.ingreso;
-          if(d.id>0){
-            IngresosComp.list(d);
-            $("#pnlModal").modal("toggle");
-            alertas.ok("Se registro Correctamente");
-          }else{
-            alertas.error(`No se registro <span hidden>${res.toString()}</span>`);
-          }
+          });
         });
-      });
     }
 
     ,view: async (obj) => {
@@ -516,22 +350,33 @@ let OfertaEmpleosComp = {
       });
     }
     ,listPrecentacion: async (row, r) => {
-        $("#pnlIngreso").append(`
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 p-0 m-0">
-              <div class="border w-100 p-2" style="height:22rem">
-                  <a href="javascript:void(0)" id="masProducto" data-row='${JSON.stringify(row)}' class="bg-dark position-absolute text-warning p-2 border fa fa-2x fa-cart-plus" style="right: 0.5rem"></a>
-                  <img src="${JSON.parse(row.imagenes)[0].url}" class="w-100 h-100">
-                  <div class="producto position-relative p-2 bg-primary w-100"  data-toggle="modal" data-target="#pnlModal" style="top:-4rem; opacity:0.8; height: 4rem;" id="${row.id}">
-                      <h5 class="mt-0 text-right">
-                        ${utilsServ.formatNumero(row.pVenta)} ${row.moneda.valor}
-                      </h5>
-                      <div class="">
-                        ${row.nombre}
-                      </div>
-                  </div>
+        let coord = JSON.parse(row.coordenadas);
+        let lat = coord[0];
+        let lng = coord[1];
+        $("#pnlAnuncio").append(`
+            <li class="media border border-bottom">
+              <img src="${row.persona.avatar?row.persona.avatar:'./img/user.png'}" class="mr-3" alt="...">
+              <div class="media-body">
+                <div class="d-flex w-100">  
+                  <h5 class="mt-0 mb-1 ">${row.persona.alias} - ${row.tpAnuncio.descripcion} como ${row.tpEmpleo.descripcion}</h5>
+                  <small>
+                    <i class="fa fa-2x fa-star text-warning"></i>
+                    <i class="fa fa-2x fa-star text-warning"></i>
+                    <i class="fa fa-2x fa-star text-warning"></i>
+                    <i class="fa fa-2x fa-star-o"></i>
+                    <i class="fa fa-2x fa-star-o"></i>
+                  </small>
+                </div>
+                <p>
+                    
+                    ${row.anuncio}
+                    <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=19/${lat}/${lng}" target="_blank"><i class="fa fa-2x fa-map-marker"></i> ${row.direccion}</a>
+                    <a href="https://wa.me/${(row.celular).replace('','')}?text=Buenas... ${row.persona.alias} ${row.tpAnuncio.descripcion} ${row.tpEmpleo.descripcion}" class="fa fa-2x fa-whatsapp"  target="_blank"></a>
+                    
+                </p>
               </div>
-          </div>`
-          );
+            </li>  
+        `);
       }
 
     ,productoSelect: async (idVal) => {
@@ -606,3 +451,5 @@ let OfertaEmpleosComp = {
 }
 
 export default OfertaEmpleosComp;
+
+

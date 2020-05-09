@@ -6,7 +6,8 @@ import './css/sistema.css';
 import './css/animate.css';
 
 import './js/app.js'
-import './js/main.js'
+/**Para PWA */
+/////import './js/main.js'
 //import './js/js.js'
 import datetimepicker from 'bootstrap4-datetimepicker'
 import { loadProgressBar }  from 'axios-progress-bar'

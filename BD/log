@@ -73,8 +73,8 @@ COMMIT
 BEGIN
 CREATE FUNCTION
 COMMENT
- pers_id | id_tipo_empleo | id_tipo_anuncio | ci | facebook | celular | direccion | coordenadas | imagenes | anuncio | calificacion | estado | usuario | editado 
----------+----------------+-----------------+----+----------+---------+-----------+-------------+----------+---------+--------------+--------+---------+---------
+ id | pers_id | id_tipo_empleo | id_tipo_anuncio | ci | facebook | celular | direccion | coordenadas | imagenes | anuncio | calificacion | estado | usuario | editado 
+----+---------+----------------+-----------------+----+----------+---------+-----------+-------------+----------+---------+--------------+--------+---------+---------
 (0 filas)
 
 COMMIT

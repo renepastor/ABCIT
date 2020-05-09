@@ -16,55 +16,49 @@
         ];
         
         
-  id_tipo_empleo dllave,
-  telefonos djson default '[]',
-  direccion dtexto,
-  facebook dtexto2,
-  coordenadas djson default '[]',
-  especialidad dtexto,
-  calificacion dentero,
         var data =
         [
             {"dep":"1","tp":"titulo", "label":"ANTECEDENTE PERSONAL"},
+            {"dep":"1","tp":"hidden", "name":"id", "req":true},
             {"dep":"1","tp":"hidden", "name":"persId", "req":true},
-            {"dep":"1","tp":"select", "name":"idTipoEmpleo", "label":"Unidad Medida", "req":true},
-            {"dep":"1","tp":"cel", "name":"celulares", "label":"Numero de Celular", "req":true},
+            {"dep":"1","tp":"select", "name":"idTipoEmpleo", "label":"Rubro o Actividad", "req":true},
+            {"dep":"1","tp":"select", "name":"idTipoAnuncio", "label":"Tipo Anuncio", "req":true},
+            {"dep":"1","tp":"ci", "name":"ci", "label":"Documento de Identificacion", "req":true},
+            {"dep":"1","tp":"buttonFb", "name":"facebook", "label":"Facebook", "req":true},
+            {"dep":"1","tp":"cel", "name":"celular", "label":"Numero de Celular", "req":true},
             {"dep":"1","tp":"text", "name":"direccion", "label":"Direccion", "req":true},
-            {"dep":"1","tp":"text", "name":"facebook", "label":"Facebook", "req":true},
             {"dep":"1","tp":"punto", "name":"coordenadas", "label":"Cordenadas", "req":true},
-            {"dep":"1","tp":"number", "name":"cantidadExistente", "label":"Cantidad Existente", "req":true},
-            {"dep":"1","tp":"number", "name":"cantidadMin", "label":"Cant. Minima", "req":true},
-            {"dep":"1","tp":"number", "name":"pUnitario", "label":"P Unitario", "req":true},
-            {"dep":"1","tp":"number", "name":"pVenta", "label":"P Venta", "req":true}
+            {"dep":"1","tp":"textarea", "name":"anuncio", "label":"Anuncio", "req":true}
         ];
 
 function armarForm(reg){
-   var req = reg.req?"required='required' ":"";
+    var regEdit = "${reg."+reg.name+"?reg."+reg.name+":''}";
+    var req = reg.req?"required='required' ":"";
         switch(reg.tp) {
             case "titulo":
                 return `                <h4 class="col-12 bg-1">${reg.label}</h4>`;
                 break;
             case "textarea":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
-                    <textarea name="${reg.name}" id="${reg.name}" value="" class="${reg.tp} form-control" ${req}></textarea>
+                    <textarea name="${reg.name}" id="${reg.name}" class="${reg.tp} form-control" ${req}>${regEdit}</textarea>
                 </div>`;
                 break;
             case "punto":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
                     <a href="javascript:void(0)" id="ver_${reg.name}" target="_blank" class="fa fa-map-marker">
-                    <input name="${reg.name}" id="${reg.name}" value="" class="${reg.tp} form-hidden" type="text" value="" ${req} oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
+                    <input name="${reg.name}" id="${reg.name}" value="${regEdit}" class="json form-hidden" type="text" ${req} oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
                 </div>`;
                 break;
             case "fotos":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label for="${reg.name}" class="img-thumbnail">
                         <img src="" id="${reg.name}_ax" width="50" height="50" alt="" class="foto"/>
-                        <input type="hidden" name="${reg.name}" id="${reg.name}" class="text">
+                        <input type="hidden" name="${reg.name}" id="${reg.name}" value="${regEdit}" class="text">
                         <i>${reg.label}</i>
                         <input type="file" name="${reg.name}File" id="${reg.name}File" placeholder="Imagen" ${reg.required} 
                         class="form-control file-img" onchange="minimizarImg({'imge':'${reg.required}_ax','input':'${reg.required}'});"/>
@@ -73,11 +67,11 @@ function armarForm(reg){
                 break;
             case "hidden":
                 return `
-                <input name="${reg.name}" id="${reg.name}" value="" type="hidden" ${req}>`;
+                <input name="${reg.name}" id="${reg.name}" value="${regEdit}" type="hidden" class="numero" ${req}>`;
                 break;
-            case "button":
+            case "buttonFb":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
                     <div id="status"></div>
                     <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
@@ -104,36 +98,36 @@ function armarForm(reg){
                 break;
             case "text":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
-                    <input name="${reg.name}" id="${reg.name}" value="" class="${reg.tp} form-control" type="text" ${req}>
+                    <input name="${reg.name}" id="${reg.name}" value="${regEdit}" class="${reg.tp} form-control" type="text" ${req}>
                 </div>`;
                 break;
             case "number":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label for="${reg.name}">${reg.label} : </label>
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-outline-primary menos" data-in="${reg.name}">-</button>
-                        <input type="text" name="${reg.name}" id="${reg.name}" ${req} placeholder="${reg.label}" max="9999" min="0" step="1" size="5" class="form-control ${reg.type}"/>
+                        <input type="text" name="${reg.name}" id="${reg.name}" value="${regEdit}" ${req} placeholder="${reg.label}" max="9999" min="0" step="1" size="5" class="form-control ${reg.type}"/>
                         <button type="button" class="btn btn-outline-primary mas" data-in="${reg.name}">+</button>
                     </div>
                 </div>`;
                 break;
             case "date":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
-                    <input name="${reg.name}" id="${reg.name}" value="" class="${reg.tp} form-control" type="date" ${req}>
+                    <input name="${reg.name}" id="${reg.name}" value="${regEdit}" class="${reg.tp} form-control" type="date" ${req}>
                 </div>`;
             case "checkbox":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-check-label" >${reg.label}:</label>
                     <label class="input-group" for="${reg.name}">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input name="${reg.name}" id="${reg.name}" value="" type="checkbox" class="${reg.tp} form-check-input">
+                                <input name="${reg.name}" id="${reg.name}" value="${regEdit}" type="checkbox" class="${reg.tp} form-check-input">
                             </div>
                         </div>
                         <div class="input-group-text">
@@ -150,9 +144,9 @@ function armarForm(reg){
                   });
                 }
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-check-label" for="${reg.name}">${reg.label}:</label>
-                    <input name="${reg.name}" id="${reg.name}" value="" class="texto form-control" type="serarch" ${req}>
+                    <input name="${reg.name}" id="${reg.name}" value="${regEdit}" class="texto form-control" type="serarch" ${req}>
                     <div id="list${reg.name}"></div>
                 </div>`;
                 break;
@@ -164,14 +158,14 @@ function armarForm(reg){
                   });
                 }
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-check-label" for="${reg.name}">${reg.label}:</label>
-                    <select name="${reg.name}" id="${reg.name}" class="${reg.tp} form-control" ${req}><option>--Seleccionar--</option>${selOption}</select>
+                    <select name="${reg.name}" id="${reg.name}" class="${reg.tp} form-control" ${req}><option value="">--Seleccionar--</option>${selOption}</select>
                 </div>`;
                 break;
             case "cel":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -181,16 +175,16 @@ function armarForm(reg){
                                 <option value="51">Peru</option>
                             </select >
                         </div>
-                        <input name="${reg.name}" id="${reg.name}" type="number" value="" min="60000000" max="79999999" class="${reg.tp} form-control" aria-label="Text input with dropdown button" ${req}>
+                        <input name="${reg.name}" id="${reg.name}" type="number" value="${regEdit}" min="60000000" max="79999999" class="${reg.tp} form-control" aria-label="Text input with dropdown button" ${req}>
                     </div>
                 </div>`;
                 break;
             case "ci":
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="${reg.name}">${reg.label}:</label>
                     <div class="input-group">
-                        <input name="${reg.name}" id="${reg.name}" type="number" min="10" value="" max="99999999" class="${reg.tp} form-control" aria-label="Text input with dropdown button" ${req}>
+                        <input name="${reg.name}" id="${reg.name}" type="number" min="10" value="${regEdit}" max="99999999" class="${reg.tp} form-control" aria-label="Text input with dropdown button" ${req}>
                         <div class="input-group-prepend">
                             <select id="sel_${reg.name}" class="form-control">
                                 <option value="BE">Beni</option>
@@ -232,9 +226,9 @@ function armarForm(reg){
                 break;
             default:
                 return `
-                <div class="col form-group">
+                <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-check-label" for="${reg.name}">${reg.label}:</label>
-                    <input name="${reg.name}" id="${reg.name}" value="" class="texto form-control" type="text" ${req}>
+                    <input name="${reg.name}" id="${reg.name}" value="${regEdit}" class="texto form-control" type="text" ${req}>
                 </div>`;
             }
   }

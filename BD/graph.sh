@@ -1,7 +1,7 @@
 #!/bin/bash
 
 postgraphile \
-  --connection postgres://localhost:5432/BDSTORE \
+  --connection postgres://localhost:5432/BDSTORE_DEV \
   --schema store \
   --host localhost \
   --port 40001 \

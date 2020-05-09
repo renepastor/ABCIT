@@ -4,7 +4,8 @@
 
 begin;
 create table store.anuncios (
-  pers_id dllave primary key,
+  id bigserial primary key,
+  pers_id dllave,
   id_tipo_empleo dllave,
   id_tipo_anuncio dllave,
   ci dtexto,
