@@ -9,7 +9,7 @@ var nPg = 0;
 var pg = 0;
 var q = ``;
 
-let Home = {
+let HomeVentas = {
     render : async () => {
         var user = JSON.parse(localStorage.getItem("dataUser"));
         let view =  /*html*/`
@@ -26,7 +26,7 @@ let Home = {
                 </div>
                 <ul class="row m-0 p-0 csForm overflow-auto" id="pnlIngreso">
                 </ul>
-                <div class="row bg-primary text-white m-0 p-1" id="pnlIngresosFoot">
+                <div class="row  bg-info text-dark m-0 p-1" id="pnlIngresosFoot">
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@ let Home = {
                 }
             })
 
-            $("#pnlIngreso").height((document.getElementsByTagName("body")[0].offsetHeight - 160));
+            $("#pnlIngreso").height((document.getElementsByTagName("body")[0].offsetHeight - 156));
             $("#pnlIngreso").on("mouseenter", ".row",function(){
                 if($(this).find(".act").hasClass("csHidden"))
                 $(this).find(".act").removeClass("csHidden");
@@ -126,7 +126,7 @@ let Home = {
 
 }
 
-export default Home;
+export default HomeVentas;
 
 
 var fnPgScroll = function(param){

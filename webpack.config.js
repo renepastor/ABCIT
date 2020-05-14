@@ -69,7 +69,6 @@ module.exports = {
       { from: 'client/img/logo.png', to: 'img/logo.png'},
       { from: 'client/img/logoOn.png', to: 'img/logoOn.png'},
       { from: 'client/img/baner.png', to: 'img/baner.png'},
-      { from: 'client/img/user.png', to: 'img/user.png'},
       { from: 'client/img/img192.png', to: 'img/img192.png'},
       { from: 'client/img/img512.png', to: 'img/img512.png'},
       { from: 'client/img/img256.png', to: 'img/img256.png'},
@@ -78,8 +77,8 @@ module.exports = {
     
     new HtmlWebpackPlugin({
       key: '1231230100000',
-      title: 'Sistema ....',
-      name: 'APP ...',
+      title: 'Sistema ABCIT',
+      name: 'APP ABCIT',
       author: 'rpmamani@ypfb.gob.bo',
       description: 'Sistema de ....',
       template: './client/index.html',

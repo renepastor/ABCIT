@@ -22,10 +22,14 @@ thead tr th{
 }
 
 .navbar{
-  background-image: url("../img/baner.png");
+  /*background-image: url("../img/baner.png");*/
   background-color: rgba(68, 68, 70, 0.3);
-  opacity: 0.9;
-  filter: alpha(opacity=85);
+  background: linear-gradient(160deg, rgba(2,0,36,1) 0%, rgba(253, 251, 213, 0.1) 60%, rgba(0,212,255,1) 70%, rgb(56, 56, 138) 100%) !important;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 160px auto;
+ /* opacity: 0.9;
+  filter: alpha(opacity=85);*/
   border:0px !important;
 }
 
@@ -84,4 +88,7 @@ thead tr th{
   max-width: 20em;
   min-width: 18em;
   overflow-y: auto;
+}
+.bg-warning{
+  color: #707070;
 }

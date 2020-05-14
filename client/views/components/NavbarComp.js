@@ -18,20 +18,24 @@ let NavbarComp = {
     render: async () => {
       let view =  /*html*/` 
       <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
-        <span class="fa fa-bars text-dark m-1"></span>
+        <span class="fa fa-bars text-light m-1"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <a href="./">
+        <img src="../img/baner.png" height="56px">
       </a>
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-        <span class="fa fa-bars text-dark m-1" style="color:dark"></span>
+        <span class="fa fa-bars text-light m-1" style="color:dark"></span>
       </button>
       <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none">
-          <a class="nav-link nav-item dropdown d-md-down-none" href="#"></a>
+          <a class="nav-link nav-item dropdown d-md-down-none" href="#">          
+          </a>
+        </li>
+        <li class="nav-item d-md-down-none text-center">
         </li>
         <li class="nav-item d-md-down-none p-1 text-right" id="nombreUser"></li>
         <li class="">
-          <img width="50" height="50" class="img-circle border fa fa-2x border-primary" src="img/user.png" alt="v" id="btnLogin" data-toggle="popover" data-placement="bottom" data-url="/login.html" data-target="#pnlLogin"/>
+          <i class="fa fa-3x fa-user-circle-o text-light" title="Ingresar al Sistema" id="btnLogin" data-toggle="popover" data-placement="bottom" data-url="/login.html" data-target="#pnlLogin"></i>
         </li>
       </ul>
         `

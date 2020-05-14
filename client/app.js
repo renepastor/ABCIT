@@ -19,6 +19,8 @@ import Usuarios           from './views/pages/Usuarios.js'
 import adminIngresos      from './views/pages/adminIngresos.js'
 import ConsultaMedica     from './views/pages/ConsultaMedica.js'
 import Anuncios           from './views/pages/Anuncios.js'
+import HomeAnuncios       from './views/pages/HomeAnuncios.js'
+import HomeVentas         from './views/pages/HomeVentas.js'
 
 import Error404           from './views/pages/Error404.js'
 import navbarComp         from './views/components/NavbarComp.js'
@@ -38,6 +40,8 @@ const routes = {
     , '/usuario'              : Usuarios
     , '/adminingresos'        : adminIngresos
     , '/adminanuncios'        : Anuncios
+    , '/homeanuncios'         : HomeAnuncios
+    , '/homeventas'           : HomeVentas
 };
 
 
@@ -52,13 +56,13 @@ const router = async () => {
     header.innerHTML = await navbarComp.render();
     await navbarComp.after_render();
     // Render the Header and footer of the page
-    if(!utilsServ.getSession("token")){
+    ////if(!utilsServ.getSession("token")){
         content.innerHTML = await Home.render();
         await Home.after_render();
 
         //inicio.innerHTML = await Login.render();
         //await Login.after_render(); 
-    }else{
+    ////}else{
         
         footer.innerHTML = await bottombarComp.render();
         await bottombarComp.after_render();
@@ -70,16 +74,17 @@ const router = async () => {
         let parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? '/:id' : '') + (request.verb ? '/' + request.verb : '')
         // Get the page from our hash of supported routes.
         // If the parsed URL is not in our list of supported routes, select the 404 page instead
-        console.log("parsedURL", parsedURL)
         let page = routes[parsedURL] ? routes[parsedURL] : Error404
         content.innerHTML = await page.render();
         await page.after_render();
-        $("#ssPnlUsuario").html(utilsServ.getSession("ssAlias"));
-        // Menu para el usuario
-        if($("#listMenu").text().trim() == ""){
-            usuarioServ.primerRolMenu()
+        if(utilsServ.getSession("token")){
+            $("#ssPnlUsuario").html(utilsServ.getSession("ssAlias"));
+            // Menu para el usuario
+            if($("#listMenu").text().trim() == ""){
+                usuarioServ.primerRolMenu()
+            }
         }
-    }
+    ////}
     loadProgressBar();
 }
 

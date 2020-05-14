@@ -240,7 +240,7 @@ const UtilsServ = {
         return axios(authOptions)
         .then(res => {
             if(res.statusText != "OK") alert("Error "+res.status);
-            if(res.data.errors != undefined) alert(res.data.errors[0].message);
+            if(res.data.errors != undefined) console.log(res.data.errors[0].message);
             return res.data;
         });
 
@@ -326,8 +326,10 @@ const UtilsServ = {
             }
             if ($("#" + res.name + ".select").length > 0)
                 dt += coma + res.name + ':"' + $("#"+res.name).val() + '"';
-            if ($("#" + res.name + ".textarea").length > 0)
-                dt += coma + res.name + ':"' + res.value + '"';
+            if ($("#" + res.name + ".textarea").length > 0){
+                dt += coma + res.name + ':"' + res.value.replace(/(\r\n|\n|\r)/gm, "<br>") + '"';
+            }
+                
             if ($("#" + res.name + ".checkbox").length > 0) {
                 var chec = (res.value=="on")?"true":"false";
                 dt += coma + res.name + ':"' + chec + '"';
@@ -634,7 +636,7 @@ const UtilsServ = {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)){location.reload(); return;}
         js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=232856817910000';
+        js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=3021042347938700';
         fjs.parentNode.insertBefore(js, fjs);
         function statusChangeCallback(response) {
             if (response.status === 'connected') {

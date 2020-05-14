@@ -4,7 +4,7 @@ importScripts('./cache-polyfill.js');
 //importScripts('./js/iDB.js');
 //importScripts('./js/sync.js');
 
-var cacheName = 'cache-v0.4.2';
+var cacheName = 'abcItv0.4.2';
 
 //Archivos para guardar en caché
 var files = [

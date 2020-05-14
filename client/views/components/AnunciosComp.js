@@ -354,11 +354,9 @@ let OfertaEmpleosComp = {
         let lat = coord[0];
         let lng = coord[1];
         $("#pnlAnuncio").append(`
-            <li class="media border border-bottom">
-              <img src="${row.persona.avatar?row.persona.avatar:'./img/user.png'}" class="mr-3" alt="...">
-              <div class="media-body">
-                <div class="d-flex w-100">  
-                  <h5 class="mt-0 mb-1 ">${row.persona.alias} - ${row.tpAnuncio.descripcion} como ${row.tpEmpleo.descripcion}</h5>
+            <div class="card border-primary mb-3 w-100 list-group-item-action">
+              <div class="card-header">
+                  ${row.persona.alias} - ${row.tpAnuncio.descripcion} como ${row.tpEmpleo.descripcion}
                   <small>
                     <i class="fa fa-2x fa-star text-warning"></i>
                     <i class="fa fa-2x fa-star text-warning"></i>
@@ -366,16 +364,19 @@ let OfertaEmpleosComp = {
                     <i class="fa fa-2x fa-star-o"></i>
                     <i class="fa fa-2x fa-star-o"></i>
                   </small>
-                </div>
-                <p>
-                    
-                    ${row.anuncio}
-                    <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=19/${lat}/${lng}" target="_blank"><i class="fa fa-2x fa-map-marker"></i> ${row.direccion}</a>
-                    <a href="https://wa.me/${(row.celular).replace('','')}?text=Buenas... ${row.persona.alias} ${row.tpAnuncio.descripcion} ${row.tpEmpleo.descripcion}" class="fa fa-2x fa-whatsapp"  target="_blank"></a>
-                    
-                </p>
               </div>
-            </li>  
+              <div class="card-body csForm p-3">
+                <div class="w-100 csHidden position-absolute act text-right p-0 m-0" style="z-index:2;right: 16px;">
+                  <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=19/${lat}/${lng}" title="${row.direccion}" target="_blank" class=""><i class="fa fa-2x fa-map-marker"></i></a>
+                  &nbsp; &nbsp; &nbsp;
+                  <a href="https://wa.me/${(row.celular).replace('','')}?text=Buenas... ${row.persona.alias} ${row.tpAnuncio.descripcion} ${row.tpEmpleo.descripcion}" class="" title="Enviar Mensaje" target="_blank"><i class="fa-2x fa fa-whatsapp"></i></a>
+                </div>
+                <p class="card-text">
+                  <img src="./img/user.svg" width="50px"  align="left" class="m-3">${row.anuncio}
+                </p>
+
+              </div>
+            </div>  
         `);
       }
 
