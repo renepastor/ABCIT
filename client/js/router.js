@@ -34,7 +34,7 @@
     
     this.get('#rrhhUsuario',          function(){this.partial(vw+'/usuarios/RRHHUsuario.html');});
     //this.get('#persona',          function(){this.partial(vw+'/personas/index.html');});
-    this.get('#persona',          function(){this.partial(vw+'/rrhhYpfb/index.html');});
+    this.get('#persona',          function(){this.partial(vw+'/rrhh/index.html');});
     this.get('#boletasPago',      function(){this.partial(vw+'/pagos/boletaPago.html');});
     
     this.get('#adminFeriados',    function(){this.partial(vw+'/feriados/index.html');});
@@ -64,7 +64,7 @@
     
     
     this.get('#contrato',         function(){this.partial(vw+'/personal/index.html');});
-    this.get('#personalYpfb',     function(){this.partial(vw+'/rrhhYpfb/index.html');});
+    this.get('#personalYpfb',     function(){this.partial(vw+'/rrhh/index.html');});
     this.get('#cas',              function(){this.partial(vw+'/casPrecentados/index.html');});
     this.get('#repoJefeUnidad',   function(){this.partial(vw+'/vacacionesProgramadas/programacionUnidad.html');});
     

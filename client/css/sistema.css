@@ -616,3 +616,6 @@ label {
   padding: 0;
   margin: 0;
 }
+.border2{
+  border: 4px solid;
+}

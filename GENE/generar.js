@@ -30,6 +30,42 @@
             {"dep":"1","tp":"punto", "name":"coordenadas", "label":"Cordenadas", "req":true},
             {"dep":"1","tp":"textarea", "name":"anuncio", "label":"Anuncio", "req":true}
         ];
+        
+        var data =
+        [
+            {"dep":"1","tp":"titulo", "label":"Datos Personales"},
+            {"dep":"1","tp":"hidden", "name":"id", "req":true},
+            {"dep":"1","tp":"label", "name":"Nombre Completo", "req":true},
+            {"dep":"1","tp":"ci", "name":"ci", "label":"Documento de Identificacion", "req":true},
+            {"dep":"1","tp":"direccion", "name":"direccion", "label":"Dirección", "req":true},
+            {"dep":"1","tp":"punto", "name":"coordenadas", "label":"Cordenadas", "req":true},
+            {"dep":"1","tp":"radio", "name":"enfermedadBase", "label":"¿Usted tiene alguna Enfermedad de Base?", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"mayorA60", "label":"¿Usted tiene 60 o mas años de edad?", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"embarasada", "label":"¿ Usted esta embarazada? ", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"hijoMenorA5", "label":"¿ Usted tiene hijos menores de 5 años?", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"cel", "name":"celular", "label":"Ingrese su Numero telefono celular Actual", "req":true},
+            {"dep":"1","tp":"select", "name":"tipoTrasporte", "label":"Tipo Trasporte a Usar", "req":true},
+            {"dep":"1","tp":"select", "name":"gradoFuncion", "label":"Indique en que grado cumpliria sus funciones desde casa", "req":true},
+
+            {"dep":"1","tp":"titulo", "label":"Señale que sistemas o recuros utiliza para desarrollar sus funciones diarias"},
+            {"dep":"1","tp":"radio", "name":"office", "label":"Office", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"sisVortex", "label":"Sistema Vortex", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"sisCorrespondencia", "label":"Sistema Correspondencia", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"sisNater", "label":"Sistema Nater", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"impresora", "label":"Impresoras", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"escaner", "label":"Escaners", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"llamadaNacional", "label":"LLamadas Nacionales", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"texto", "name":"otroSistema", "label":"Otros Sistemas", "req":true},
+            {"dep":"1","tp":"texto", "name":"otroPrograma", "label":"Otros Programas", "req":true},
+
+
+            {"dep":"1","tp":"titulo", "label":"En el Lugar donde vive usted tiene acceso a:"},
+            {"dep":"1","tp":"radio", "name":"conInternet", "label":"Internet", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"conComputadora", "label":"Computadora", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"audifonoMicrofono", "label":"Audifono Microfono", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"conCelular", "label":"Celular", "data":"[\"Si\",\"No\"]", "req":true},
+            {"dep":"1","tp":"radio", "name":"conLaptop", "label":"Laptop", "data":"[\"Si\",\"No\"]", "req":true}
+        ];
 
 function armarForm(reg){
     var regEdit = "${reg."+reg.name+"?reg."+reg.name+":''}";

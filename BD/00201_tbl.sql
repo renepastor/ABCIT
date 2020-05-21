@@ -16,6 +16,7 @@ create table store.anuncios (
   imagenes djson default '[]',
   anuncio dtexto,
   calificacion dentero4,
+  fecha_limite dfecha2,
   estado destado,
   usuario duser,
   editado dfechahora

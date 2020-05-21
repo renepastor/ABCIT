@@ -9,7 +9,7 @@ module.exports = function(req, res, next){
     var configLDAP = { url: process.env.HOST_LDAP,
       baseDN: process.env.HOST_LDAP_DN,
       username: 'rpmamani' + process.env.HOST_LDAP_DOMAIN_LOCAL,
-      password: '&pmamani123zaq'
+      password: '&pmam#a4%ni&$123"zaq'
     };
   
   /*

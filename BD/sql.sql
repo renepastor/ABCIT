@@ -2,6 +2,7 @@
   fec: 19/06/2017
 */
 begin;
+/*
 drop table store.anuncios cascade;
 commit;
 
@@ -97,5 +98,12 @@ SELECT * FROM store.fn_b_anuncios('a');
 
 grant execute on function store.fn_b_anuncios(dtexto) to publico;
 GRANT SELECT ON store.anuncios TO publico;
+GRANT SELECT, INSERT ON store.usuarios TO publico;
+*/
+GRANT INSERT ON store.usr_roles TO publico;
+
+grant execute on function store.create_user_anucios(dtexto2,dtexto2,dtexto2, djson) to publico;
+
+
 
 commit;

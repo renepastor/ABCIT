@@ -8,7 +8,7 @@ let BottombarComp = {
             <span class="badge badge-pill badge-danger" id="nroAlertas"></span>
           </a>
         </div>
-        <span><a href="#"></a> © 2019 YPFB-GTIC</span>
+        <span><a href="#"></a> © 2019 ABC.IT</span>
         <div class="col"></div>
         `
         return view

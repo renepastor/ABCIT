@@ -37,13 +37,13 @@ insert into store.menues (rol_id, enla_id,usuario) values
 
 -------******USUARIO ROL******--
 --SELECT setval('store.usr_roles_id_seq', 1);
-insert into store.usuarios(pers_id, cuenta, alias, clave,usuario) values 
-(1, 'rpmamani', 'RENE PASTOR MAMANI FLORES', crypt('12345', gen_salt('bf')), 'rpmamani');
+insert into store.usuarios(cuenta, alias, clave,usuario) values 
+('rpmamani', 'RENE PASTOR MAMANI FLORES', crypt('12345', gen_salt('bf')), 'rpmamani');
 INSERT INTO store.usr_roles(user_id,rol_id,expira,permiso,usuario) VALUES
 (1,(SELECT id FROM store.roles WHERE nombre='ADMINISTRADOR'),'2050-01-01','{}','rpmamani');
 
-insert into store.usuarios(pers_id, cuenta, alias, clave,usuario) values 
-(2, 'jvictor', 'JAIME VICTOR MAMANI FLORES', crypt('12345', gen_salt('bf')), 'rpmamani');
+insert into store.usuarios(cuenta, alias, clave,usuario) values 
+('jvictor', 'JAIME VICTOR MAMANI FLORES', crypt('12345', gen_salt('bf')), 'rpmamani');
 INSERT INTO store.usr_roles(user_id,rol_id,expira,permiso,usuario) VALUES
 (2,(SELECT id FROM store.roles WHERE nombre='ADMINISTRADOR'),'2050-01-01','{}','rpmamani');
 

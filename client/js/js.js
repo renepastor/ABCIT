@@ -1,14 +1,6 @@
-/*var HOST = 'https://fbt.ypfb.bo';
-var HOST_WHISPER = HOST+'/whisper/lista';
-var HOST_WHISPER_EESS = 'http://whisper.ypfb.gob.bo/vista/eess.json';
-var HOST_SER = HOST;
-
-var HOST_SERV = HOST_SER+"/scraping";
-var HOST_SERV1 = HOST_SER+"/scraping1";
-*/
 const HOSTSERV = 'http://localhost:8085';
 slSet("miUbi",JSON.stringify([-68.1306, -16.4987]))
-const nameSis = "YPFB";
+const nameSis = "ABCIT";
 const pag = 30;
 function slSet(miName, miDato){
   window.localStorage.setItem(miName,miDato);
@@ -429,7 +421,7 @@ function listAjaxSelect(name,id, val){
 }
 
 (function ($) {
-    /* a:YPFB
+    /* a:ABCIT
     ** c:renepastor@gmail */
 
     $.fn.select = function (param) {

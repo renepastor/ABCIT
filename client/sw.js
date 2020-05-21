@@ -12,16 +12,16 @@ var files = [
   './img/logo.png',
   './img/symbol.png',
   './img/logoOn.png',
-  './img/symbolOn.png'
-];
-
-/*
+  './img/symbolOn.png',
   './https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js',
   './https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css',
   './https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css',
   './https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.js',
-  './https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css',
-*/
+  './https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css'
+];
+
+
+  
 
 //Añadiendo el detector de eventos `install`
 self.addEventListener('install', (event) => {
@@ -146,7 +146,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('push', (event) => {
   //console.info('Evento: Empuje (Push)');
 
-  var title = 'YPFB';
+  var title = 'ABCIT';
   var body = {
     body: 'Las estaciones de servisio estan con ',
     tag: 'vibration-sample',

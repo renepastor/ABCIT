@@ -13,6 +13,7 @@ import datetimepicker from 'bootstrap4-datetimepicker'
 import { loadProgressBar }  from 'axios-progress-bar'
 
 import Login              from './views/pages/Login.js'
+import RegistrarUsuario   from './views/components/RegistrarUsuarioComp.js'
 import Home               from './views/pages/Home.js'
 import Salir              from './views/pages/Salir.js'
 import Usuarios           from './views/pages/Usuarios.js'
@@ -34,6 +35,7 @@ const pag = 20;
 const routes = {
     '/'                       : Home
     , '/login'                : Login
+    , '/registrarusuario'     : RegistrarUsuario
     , '/salir'                : Salir
     , '/consultamedica'       : ConsultaMedica
 

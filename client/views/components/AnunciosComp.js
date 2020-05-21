@@ -7,6 +7,7 @@ import anuncioServ from '../../services/AnunciosServ'
 let moment = require("moment")
 
 let OfertaEmpleosComp = {
+    /*** Cabesera del Listado */
     body: async (data) => {
       return `
       <div class="row">
@@ -20,10 +21,10 @@ let OfertaEmpleosComp = {
                 </div>
             </div>
                 <div class="row bg-primary text-white m-0">
-                  <div class="col">Anuncio</div>
-                  <div class="col">Celular</div>
-                  <div class="col">Grupo o Actividad</div>
-                  <div class="col">Tipo Anuncio</div>
+                  <div class="col-7">Anuncio</div>
+                  <div class="col-1">Celular</div>
+                  <div class="col-2">Grupo o Actividad</div>
+                  <div class="col-2">Tipo Anuncio</div>
                 </div>
                 <ul class="table-responsive" id="pnlAnuncio">
                 </ul>
@@ -34,18 +35,17 @@ let OfertaEmpleosComp = {
       `;
     },
     
-    
-    
+    /*** Lista para edicion */
     list: async (row, r) => {
       $("#pnlAnuncio").append(`
          <div class="row ${row.estado} border list-group-item-action m-0 ${(r%2!=0)?'bg-light':''}">
-           <div class="col">${row.anuncio}</div>
-           <div class="col">
+           <div class="col-7">${row.anuncio}</div>
+           <div class="col-1">
               ${row.celular}
            </div>
-           <div class="col">${row.tpEmpleo.descripcion}</div>
-           <div class="col">${row.tpAnuncio.descripcion}</div>
-           <div class="col csHidden position-absolute act text-right" style="z-index:2;">
+           <div class="col-2">${row.tpEmpleo.descripcion}</div>
+           <div class="col-2">${row.tpAnuncio.descripcion}</div>
+           <div class="col csHidden position-absolute act text-right bg-light" style="z-index:2;">
              <button class="btn btn-outline-primary fa fa-edit" title="Modificar equipos" data-url="/equipos/edit.html" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="equipos" id="${row.id}"></button>
              <button class="btn btn-outline-primary fa fa-eye" title="Ver" data-backdrop="static" data-toggle="modal" data-target="#pnlModal" data-dato='{"id":"${row.id}"}' data-name="cuentas" id="${row.id}"></button>
              <a href="https://api.whatsapp.com/send?phone=${row.celular}&text=UMEC: Mi nombre es ${utilsServ.getSession('ssAlias')}" target="_blank" rel="noopener" class="btn btn-outline-primary fa fa-whatsapp"></a>
@@ -53,8 +53,8 @@ let OfertaEmpleosComp = {
            </div>
          </div>`
        );
-   }
-   
+    }
+    /*** Form de registro */
    ,add: async (reg={}) => {
         $("#pnlModal").html(`
         <div class="modal-dialog modal-lg" role="document">
@@ -123,8 +123,11 @@ let OfertaEmpleosComp = {
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <label class="form-label" for="coordenadas">Cordenadas:</label>
-                        <a href="javascript:void(0)" id="ver_coordenadas" target="_blank" class="fa fa-map-marker">
-                        <input name="coordenadas" id="coordenadas" value="${reg.coordenadas?reg.coordenadas:''}" class="json form-hidden" type="text" required='required'  oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
+                        <div class="input-group">
+                            <input name="coordenadas" id="coordenadas" value="${reg.coordenadas?reg.coordenadas:''}" class="json form-hidden" type="text" required='required'  oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')">
+                            <button type="button" class="btn btn-warning" id="idCoordenadas"><i class="fa fa-map-marker"></i> Mi Ubicar</button>
+                        </div>
+
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-8">
                         <label class="form-label" for="anuncio">Anuncio:</label>
@@ -147,6 +150,9 @@ let OfertaEmpleosComp = {
         </div>
         `);
         (function(){
+            $("#idCoordenadas").on("click", function(){
+              utilsServ.geoPop('coordenadas')
+            })
             let resSearch = anuncioServ.idSearch();
             resSearch.then(res=>{
                 console.log(res)
@@ -156,7 +162,7 @@ let OfertaEmpleosComp = {
                 utilsServ.selectOp({"pnl":"idTipoEmpleo","valor":"id","texto":["descripcion"], "data":listTpProfecion})
                 utilsServ.selectOp({"pnl":"idTipoAnuncio","valor":"id","texto":["descripcion"], "data":listTpAnuncio})
 
-                utilsServ.miPunto("coordenadas");
+                //utilsServ.miPunto("coordenadas");
                 utilsServ.btnFacebook();
                 $("#persId").val(utilsServ.getSession("ssPersId"));
             });
@@ -349,10 +355,13 @@ let OfertaEmpleosComp = {
         });
       });
     }
+    /*** Registro de precentacion para el usuario visita */    
     ,listPrecentacion: async (row, r) => {
         let coord = JSON.parse(row.coordenadas);
         let lat = coord[0];
         let lng = coord[1];
+        let avatar = JSON.parse(row.persona.avatar)[0];
+        console.log(avatar)
         $("#pnlAnuncio").append(`
             <div class="card border-primary mb-3 w-100 list-group-item-action">
               <div class="card-header">
@@ -372,13 +381,13 @@ let OfertaEmpleosComp = {
                   <a href="https://wa.me/${(row.celular).replace('','')}?text=Buenas... ${row.persona.alias} ${row.tpAnuncio.descripcion} ${row.tpEmpleo.descripcion}" class="" title="Enviar Mensaje" target="_blank"><i class="fa-2x fa fa-whatsapp"></i></a>
                 </div>
                 <p class="card-text">
-                  <img src="./img/user.svg" width="50px"  align="left" class="m-3">${row.anuncio}
+                  <img src="${avatar.url?avatar.url:"./img/img120.png"}" width="70px" class="border2 rounded-lg border-warning mr-2" align="left" class="m-3">${row.anuncio}
                 </p>
 
               </div>
             </div>  
         `);
-      }
+    }
 
     ,productoSelect: async (idVal) => {
       $("#pnlModal").html("");

@@ -12,17 +12,16 @@ let LoginComp = {
               <span id="ssPnlUsuario" class="texto form-control text-truncate px-1"></span>
             </div>
           </div>
-          <div class="fade show active tab-content p-1" id="pnlRolesSesion" role="tabpanel" aria-labelledby="tab-ldap">
+          <!-- div class="fade show active tab-content p-1" id="pnlRolesSesion" role="tabpanel" aria-labelledby="tab-ldap">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">Rol</span>
               </div>
               <select id="ssPnlRoles" required="" name="ssIdRol" class="texto form-control"></select>
             </div>
-          </div>
+          </div -->
           <div class="fade show active tab-content p-1" id="ldap" role="tabpanel" aria-labelledby="tab-ldap">
             <form method="POST" id="formLoginPopover" class="">
-                <div class="card-header p-1"><b>Iniciar Sesion</b></div>
                 <div class="input-group">
                   <div class="input-group-prepend fa-span">
                     <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -36,12 +35,16 @@ let LoginComp = {
                   <input placeholder="Contraseña" required="" type="password" id="pClave" name="pClave" class="texto form-control">
                 </div>
                 <div class="inpForm m-1 text-center">
-                  <button type="submit" class="btn btn-sm btn-outline-primary"><i class=" fa fa-sing-in"></i> Ingresar</button>
+                  <button type="submit" class="btn btn-sm btn-primary"><i class=" fa fa-sing-in"></i> Ingresar</button>
                   <a type="button" href="#/salir" class="btn btn-sm btn-outline-primary"> Salir <i class=" fa fa-sign-out"></i></a>
                 </div>
             </form>
           </div>
-        
+          <div class="inpForm m-1 text-center justify-content-center">
+            <div class="input-group text-center justify-content-center">
+              <a type="button" href="#/registrarusuario" onClick='document.getElementById("btnLogin").click()' class="btn btn-sm btn-outline-info"> <i class=" fa fa-vcard-o"></i> Registrar Usuario</a>
+            </div>
+          </div>
       </div>`;
       return view;
     }

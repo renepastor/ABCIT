@@ -31,7 +31,7 @@ create table store.parametros (
 
 
 create table store.usuarios (
-  pers_id dllave primary key,
+  pers_id bigserial primary key,
   cuenta dtexto2 unique,
   clave dtexto2,
   alias dtexto2,
@@ -151,6 +151,7 @@ create table store.ingresos (
   cantidad_min dmoneda,
   p_unitario dmoneda3,
   p_venta dmoneda3,
+  fecha_limite dfecha2,
   estado destado,
   registrado dfechahora,
   usuario duser,

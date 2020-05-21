@@ -1,13 +1,8 @@
-                <h4 class="col-12 bg-1">ANTECEDENTE PERSONAL</h4>
+                <h4 class="col-12 bg-1">Datos Personales</h4>
                 <input name="id" id="id" value="${reg.id?reg.id:''}" type="hidden" class="numero" required='required' >
-                <input name="persId" id="persId" value="${reg.persId?reg.persId:''}" type="hidden" class="numero" required='required' >
                 <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-check-label" for="idTipoEmpleo">Rubro o Actividad:</label>
-                    <select name="idTipoEmpleo" id="idTipoEmpleo" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-check-label" for="idTipoAnuncio">Tipo Anuncio:</label>
-                    <select name="idTipoAnuncio" id="idTipoAnuncio" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
+                    <label class="form-check-label" for="Nombre Completo">undefined:</label>
+                    <input name="Nombre Completo" id="Nombre Completo" value="${reg.Nombre Completo?reg.Nombre Completo:''}" class="texto form-control" type="text" required='required' >
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="ci">Documento de Identificacion:</label>
@@ -30,33 +25,376 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="facebook">Facebook:</label>
-                    <div id="status"></div>
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="celulares">Numero de Celular:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <select id="sel_celulares" class="form-control">
-                                <option value="591">Bol</option>
-                                <option value="55">Brasil</option>
-                                <option value="51">Peru</option>
-                            </select >
-                        </div>
-                        <input name="celulares" id="celulares" type="number" value="${reg.celulares?reg.celulares:''}" min="60000000" max="79999999" class="cel form-control" aria-label="Text input with dropdown button" required='required' >
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="direccion">Direccion:</label>
-                    <input name="direccion" id="direccion" value="${reg.direccion?reg.direccion:''}" class="text form-control" type="text" required='required' >
+                    <label class="form-check-label" for="direccion">Dirección:</label>
+                    <input name="direccion" id="direccion" value="${reg.direccion?reg.direccion:''}" class="texto form-control" type="text" required='required' >
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <label class="form-label" for="coordenadas">Cordenadas:</label>
                     <a href="javascript:void(0)" id="ver_coordenadas" target="_blank" class="fa fa-map-marker">
                     <input name="coordenadas" id="coordenadas" value="${reg.coordenadas?reg.coordenadas:''}" class="json form-hidden" type="text" required='required'  oninvalid="this.setCustomValidity('Es nesesario que su GPS este habilitado')" oninput="this.setCustomValidity('')"> Ver</a>
+                </div><div class="col input-group">
+                        <label class="form-label" for="enfermedadBase">¿Usted tiene alguna Enfermedad de Base?:</label>
+                        <div class="btn-toolbar radio" id="enfermedadBase">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="enfermedadBase" id="enfermedadBase0" value="Si" type="radio" class="radioenfermedadBase form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="enfermedadBase" id="enfermedadBase1" value="No" type="radio" class="radioenfermedadBase form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="mayorA60">¿Usted tiene 60 o mas años de edad?:</label>
+                        <div class="btn-toolbar radio" id="mayorA60">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="mayorA60" id="mayorA600" value="Si" type="radio" class="radiomayorA60 form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="mayorA60" id="mayorA601" value="No" type="radio" class="radiomayorA60 form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="embarasada">¿ Usted esta embarazada? :</label>
+                        <div class="btn-toolbar radio" id="embarasada">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="embarasada" id="embarasada0" value="Si" type="radio" class="radioembarasada form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="embarasada" id="embarasada1" value="No" type="radio" class="radioembarasada form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="hijoMenorA5">¿ Usted tiene hijos menores de 5 años?:</label>
+                        <div class="btn-toolbar radio" id="hijoMenorA5">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="hijoMenorA5" id="hijoMenorA50" value="Si" type="radio" class="radiohijoMenorA5 form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="hijoMenorA5" id="hijoMenorA51" value="No" type="radio" class="radiohijoMenorA5 form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="celular">Ingrese su Numero telefono celular Actual:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <select id="sel_celular" class="form-control">
+                                <option value="591">Bol</option>
+                                <option value="55">Brasil</option>
+                                <option value="51">Peru</option>
+                            </select >
+                        </div>
+                        <input name="celular" id="celular" type="number" value="${reg.celular?reg.celular:''}" min="60000000" max="79999999" class="cel form-control" aria-label="Text input with dropdown button" required='required' >
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
-                    <label class="form-label" for="anuncio">Anuncio:</label>
-                    <textarea name="anuncio" id="anuncio" class="textarea form-control" required='required' >${reg.anuncio?reg.anuncio:''}</textarea>
+                    <label class="form-check-label" for="tipoTrasporte">Tipo Trasporte a Usar:</label>
+                    <select name="tipoTrasporte" id="tipoTrasporte" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
                 </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-check-label" for="gradoFuncion">Indique en que grado cumpliria sus funciones desde casa:</label>
+                    <select name="gradoFuncion" id="gradoFuncion" class="select form-control" required='required' ><option value="">--Seleccionar--</option></select>
+                </div>                <h4 class="col-12 bg-1">Señale que sistemas o recuros utiliza para desarrollar sus funciones diarias</h4><div class="col input-group">
+                        <label class="form-label" for="office">Office:</label>
+                        <div class="btn-toolbar radio" id="office">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="office" id="office0" value="Si" type="radio" class="radiooffice form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="office" id="office1" value="No" type="radio" class="radiooffice form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="sisVortex">Sistema Vortex:</label>
+                        <div class="btn-toolbar radio" id="sisVortex">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="sisVortex" id="sisVortex0" value="Si" type="radio" class="radiosisVortex form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="sisVortex" id="sisVortex1" value="No" type="radio" class="radiosisVortex form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="sisCorrespondencia">Sistema Correspondencia:</label>
+                        <div class="btn-toolbar radio" id="sisCorrespondencia">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="sisCorrespondencia" id="sisCorrespondencia0" value="Si" type="radio" class="radiosisCorrespondencia form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="sisCorrespondencia" id="sisCorrespondencia1" value="No" type="radio" class="radiosisCorrespondencia form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="sisNater">Sistema Nater:</label>
+                        <div class="btn-toolbar radio" id="sisNater">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="sisNater" id="sisNater0" value="Si" type="radio" class="radiosisNater form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="sisNater" id="sisNater1" value="No" type="radio" class="radiosisNater form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="impresora">Impresoras:</label>
+                        <div class="btn-toolbar radio" id="impresora">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="impresora" id="impresora0" value="Si" type="radio" class="radioimpresora form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="impresora" id="impresora1" value="No" type="radio" class="radioimpresora form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="escaner">Escaners:</label>
+                        <div class="btn-toolbar radio" id="escaner">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="escaner" id="escaner0" value="Si" type="radio" class="radioescaner form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="escaner" id="escaner1" value="No" type="radio" class="radioescaner form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="llamadaNacional">LLamadas Nacionales:</label>
+                        <div class="btn-toolbar radio" id="llamadaNacional">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="llamadaNacional" id="llamadaNacional0" value="Si" type="radio" class="radiollamadaNacional form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="llamadaNacional" id="llamadaNacional1" value="No" type="radio" class="radiollamadaNacional form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-check-label" for="otroSistema">Otros Sistemas:</label>
+                    <input name="otroSistema" id="otroSistema" value="${reg.otroSistema?reg.otroSistema:''}" class="texto form-control" type="text" required='required' >
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <label class="form-check-label" for="otroPrograma">Otros Programas:</label>
+                    <input name="otroPrograma" id="otroPrograma" value="${reg.otroPrograma?reg.otroPrograma:''}" class="texto form-control" type="text" required='required' >
+                </div>                <h4 class="col-12 bg-1">En el Lugar donde vive usted tiene acceso a:</h4><div class="col input-group">
+                        <label class="form-label" for="conInternet">Internet:</label>
+                        <div class="btn-toolbar radio" id="conInternet">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="conInternet" id="conInternet0" value="Si" type="radio" class="radioconInternet form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="conInternet" id="conInternet1" value="No" type="radio" class="radioconInternet form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="conComputadora">Computadora:</label>
+                        <div class="btn-toolbar radio" id="conComputadora">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="conComputadora" id="conComputadora0" value="Si" type="radio" class="radioconComputadora form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="conComputadora" id="conComputadora1" value="No" type="radio" class="radioconComputadora form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="audifonoMicrofono">Audifono Microfono:</label>
+                        <div class="btn-toolbar radio" id="audifonoMicrofono">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="audifonoMicrofono" id="audifonoMicrofono0" value="Si" type="radio" class="radioaudifonoMicrofono form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="audifonoMicrofono" id="audifonoMicrofono1" value="No" type="radio" class="radioaudifonoMicrofono form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="conCelular">Celular:</label>
+                        <div class="btn-toolbar radio" id="conCelular">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="conCelular" id="conCelular0" value="Si" type="radio" class="radioconCelular form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="conCelular" id="conCelular1" value="No" type="radio" class="radioconCelular form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div><div class="col input-group">
+                        <label class="form-label" for="conLaptop">Laptop:</label>
+                        <div class="btn-toolbar radio" id="conLaptop">
+                            
+                            <label class="btn-group mr-2 label-radio" for"Si">
+                                <div class="input-group-text">
+                                    <input name="conLaptop" id="conLaptop0" value="Si" type="radio" class="radioconLaptop form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    Si
+                                </div>
+                            </label>
+                            <label class="btn-group mr-2 label-radio" for"No">
+                                <div class="input-group-text">
+                                    <input name="conLaptop" id="conLaptop1" value="No" type="radio" class="radioconLaptop form-check-input" required='required' >
+                                </div>
+                                <div class="input-group-text">
+                                    No
+                                </div>
+                            </label>
+                        </div>
+                    </div>

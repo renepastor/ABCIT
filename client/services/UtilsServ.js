@@ -417,7 +417,86 @@ const UtilsServ = {
             document.getElementById("ver_"+pnl).href = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=19/${lat}/${lng}`;
         });
     }
+    ,geoPop:(id)=>{
+        $("#pnlFijo").html(`<div class="modal-dialog modal-dos" role="document">
+        <form class="csForm modal-content" id="formCrearDetallePermisoVacacion">
+          <div class="modal-header">
+            <legend class="modal-title" id="exampleModalLongTitle">Georreferencia</legend>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body p-0 m-0">
+            <div class="row align-items-start mx-0">
+              <div class="w-100 bg-warning text-dark position-relative">
+                <h4 class=""> Con el cursor selecciona <i class="fa fa-map-marker"></i> y ubique en su posición</h4>
+              </div>
+              <div class="form-group col">
+                <div id='map' style="height: 30em;"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      `);
+        //var obj = {dataset:{"url":"/punto.html", "target":"#pnlFijo","dataUrl":"/punto.html", "dataTarget":"#pnlFijo", "dataBackdrop":"static"}};
+        UtilsServ.setSession("inputNamePoint", name);
+        $("#pnlFijo").modal("toggle");
+        UtilsServ.mapPoint(UtilsServ.setSession("inputNamePoint"));
+        //fnUrl(obj);
+    }
+    ,mapPoint:(name)=>{
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmVuZXBhc3RvciIsImEiOiJjam5lcjRmaXgwMGwwM3JyMW9teHpnaGtuIn0.1PBzVNQLaIubrI77ZmediA';
+        var coordinates = document.getElementById(name);
+        var latLon = [-68.0954, -16.5497];
+        if(UtilsServ._id(name).value){
+          latLon = eval(UtilsServ._id(name).value);
+          latLon = [latLon[1],latLon[0]];
+        }
+        var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v10',
+          center: latLon,
+          zoom: 15,
+          pitch: 20
+        });
+        //control de navegacion
+        map.addControl(new mapboxgl.NavigationControl());
+        // control de mi ubicacion
+        map.addControl(new mapboxgl.GeolocateControl({positionOptions: {enableHighAccuracy: true},trackUserLocation: true}));
+        //expandir ventana completa
+        map.addControl(new mapboxgl.FullscreenControl());
+        map.on('dblclick', function(e){
+          var lngLat = e.lngLat;
+          //coordinates.style.display = 'block';
+          //coordinates.innerHTML = 'Long: ' + lngLat.lng + '<br />Lati: ' + lngLat.lat;
+          var name = UtilsServ.getSession("inputNamePoint");
+          UtilsServ._id(name).value = JSON.stringify(lngLat);
+          marker.setLngLat([lngLat.lng, lngLat.lat]);
+        });
+        var marker = new mapboxgl.Marker({
+          draggable: true,
+          title:"Punto de venta del producto"
+        }).setLngLat(latLon ).addTo(map);
 
+        marker.on('dragend', function() {
+            //console.log(slGet("inputNamePoint"))
+            var lngLat = marker.getLngLat();
+            var name = UtilsServ.getSession("inputNamePoint");
+            if(name != null)
+            UtilsServ._id(name).value = JSON.stringify([lngLat.lat,lngLat.lng]);
+          });
+          function onDragEnd() {
+            var lngLat = marker.getLngLat();
+            var name = UtilsServ.getSession("inputNamePoint");
+            if(name != null){
+                UtilsServ._id(name).value = JSON.stringify([lngLat.lat,lngLat.lng]);
+            }
+          }
+          marker.on('dragend', onDragEnd);
+    }
+        
+      
     // --------------------------------
     //  Simple sleep implementation
     // --------------------------------
@@ -849,7 +928,7 @@ function fnEnable(){
 }
 
 var menos = function(id){
-  var obj = dId(id);
+  var obj = UtilsServ._id(id);
   if(!obj.step) obj.step = 1;
   if(!obj.value) obj.value = 0;
   if(obj.value*1-obj.step*1 >= obj.min*1)
@@ -857,7 +936,7 @@ var menos = function(id){
   //else obj.value = obj.value*1;
 }
 var mas = function(id){
-  var obj = dId(id);
+  var obj = UtilsServ._id(id);
   if(!obj.step) obj.step = 1;
   if(!obj.value) obj.value = 0;
   if(obj.value*1+obj.step*1 <= obj.max*1)

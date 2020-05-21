@@ -25,7 +25,7 @@ create domain dreal3   as float default 0.00;
 create domain dhora    as time not null;
 create domain dhora2   as time default now();
 create domain dfecha   as date not null;
-create domain dfecha2  as date;
+create domain dfecha2  as date default now();
 create domain dmoneda  as numeric(18, 2) not null;
 create domain dmoneda2 as numeric(18, 2) default 0.00;
 create domain dmoneda3 as numeric(12, 6) default 0.0;

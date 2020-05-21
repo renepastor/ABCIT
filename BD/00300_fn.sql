@@ -58,6 +58,52 @@ $$
     LANGUAGE sql;
 
 
+/** Aut: renepastor@gmail.com AGO2017
+*  Modificar contrasenia del usuario logueado
+*   **/
+create or replace function store.edit_clave(
+  p_clave dtexto2,
+  p_clave2 dtexto2
+) returns text as $$
+declare
+  v_pers_id dllave:=1;
+  --current_setting('jwt.claims.pers_id')::integer
+begin
+
+  UPDATE store.usuarios
+  SET clave = crypt(p_clave2, gen_salt('bf'))
+  WHERE pers_id = current_setting('jwt.claims.pers_id')::bigserial
+  AND p_clave = p_clave;
+  --- asignando rol para anuncios
+  
+  if found then
+    return 'ok';
+  end if;
+  return 'Por favor verifique los datos';
+end;
+$$ language plpgsql;
+
+comment on function store.edit_clave(dtexto2,dtexto2)
+is 'Modificar clave del usuario';
+
+
+/** Aut: renepastor@gmail.com AGO2017
+*  Registro de usuario 
+*   ** /
+create or replace function store.clave_user() returns trigger as $$
+begin
+  NEW.editado := now();
+  NEW.clave := crypt(NEW.clave, gen_salt('bf'));
+  NEW.estado := 'C';
+  NEW.usuario := 'admin'; --current_setting('jwt.claims.cuenta')::text;
+  return NEW;
+end;
+$$ language plpgsql;
+
+create trigger clave_user before insert on store.usuarios
+  for each row execute procedure store.clave_user();
+*/
+
 /*
 CREATE OR REPLACE FUNCTION store.new_consultas() returns TRIGGER AS $$
 DECLARE
@@ -118,7 +164,7 @@ comment on function store.fn_b_consultas(p_dato dtexto) is 'Buscando consultas s
 
 CREATE OR REPLACE FUNCTION store.fn_b_ingresos(p_dato dtexto) RETURNS SETOF store.ingresos AS $$
     SELECT i.id, i.id_unidad_medida, i.id_moneda, i.id_almacen, i.id_rubro, i.nombre, i.descripcion, i.imagenes, i.cantidad,
-           i.cantidad_existente, i.cantidad_min, i.p_unitario, i.p_venta, i.estado, i.registrado, i.usuario, i.editado
+           i.cantidad_existente, i.cantidad_min, i.p_unitario, i.p_venta, i.fecha_limite, i.estado, i.registrado, i.usuario, i.editado
     FROM store.ingresos i
     WHERE upper(i.descripcion) like upper('%'||$1||'%')::dtexto
     OR upper(i.nombre) like upper('%'||$1||'%');
