@@ -36,7 +36,7 @@
     "moment": "^2.24.0",
     "postcss-loader": "^2.0.6",
     "postgraphile": "^4.4.3",
-    "precss": "^2.0.0",
+    "precss": "^3.0.0",
     "sass-loader": "^6.0.6",
     "socket.io": "^2.2.0",
     "style-loader": "^0.18.2",
