@@ -38,7 +38,7 @@
     "postgraphile": "^4.4.3",
     "precss": "^2.0.0",
     "sass-loader": "^6.0.6",
-    "socket.io": "^2.2.0",
+    "socket.io": "^3.0.5",
     "style-loader": "^0.18.2",
     "tether": "^1.4.0",
     "transfer-webpack-plugin": "^0.1.4",
