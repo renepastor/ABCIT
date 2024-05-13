@@ -36,15 +36,15 @@
     "moment": "^2.24.0",
     "postcss-loader": "^2.0.6",
     "postgraphile": "^4.4.3",
-    "precss": "^2.0.0",
+    "precss": "^4.0.0",
     "sass-loader": "^6.0.6",
     "socket.io": "^2.2.0",
     "style-loader": "^0.18.2",
     "tether": "^1.4.0",
     "transfer-webpack-plugin": "^0.1.4",
     "url-loader": "^0.5.9",
-    "webpack": "^3.5.5",
-    "webpack-cli": "^3.3.11",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
     "webpack-dev-middleware": "^2.0.4"
   },
   "devDependencies": {
