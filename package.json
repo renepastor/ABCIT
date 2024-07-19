@@ -11,7 +11,7 @@
   "author": "Esther Falayi",
   "license": "ISC",
   "dependencies": {
-    "@coreui/coreui": "^2.1.12",
+    "@coreui/coreui": "^3.0.0",
     "activedirectory": "^0.7.2",
     "axios": "^0.19.2",
     "axios-progress-bar": "^1.2.0",
